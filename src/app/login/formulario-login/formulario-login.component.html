@@ -1,0 +1,16 @@
+<form [formGroup]="formularioLogin">
+  <label>Correo electrónico:</label><br>
+  <input type="email" formControlName="correoUsuario" /><br>
+  <span style="color: red" *ngIf="formularioLogin.controls['correoUsuario'].dirty && formularioLogin.controls['correoUsuario'].hasError('required')">
+      El correo es un campo obligatorio<br>
+  </span>
+  <span style="color: red" *ngIf="formularioLogin.controls['correoUsuario'].dirty && formularioLogin.controls['correoUsuario'].hasError('pattern')">
+    El correo debe ser válido<br>
+  </span>
+  <label>Contraseña:</label><br>
+  <input type="password" formControlName="contraUsuario" />
+  <span style="color: red" *ngIf="formularioLogin.controls['contraUsuario'].dirty && formularioLogin.controls['contraUsuario'].hasError('required')" >
+      <br>La contraseña no puede estar vacía
+  </span><br>
+  <button [disabled]="!formularioLogin.valid" type="button" (click)="test()">Enviar</button>
+</form>
