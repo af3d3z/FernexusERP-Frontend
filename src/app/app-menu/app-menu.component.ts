@@ -6,7 +6,7 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
   templateUrl: './app-menu.component.html',
   imports: [
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
   ],
   styleUrl: './app-menu.component.scss'
 })
