@@ -1,16 +1,45 @@
-<form [formGroup]="formularioLogin">
-  <label>Correo electrónico:</label><br>
-  <input type="email" formControlName="correoUsuario" /><br>
-  <span style="color: red" *ngIf="formularioLogin.controls['correoUsuario'].dirty && formularioLogin.controls['correoUsuario'].hasError('required')">
-      El correo es un campo obligatorio<br>
-  </span>
-  <span style="color: red" *ngIf="formularioLogin.controls['correoUsuario'].dirty && formularioLogin.controls['correoUsuario'].hasError('pattern')">
-    El correo debe ser válido<br>
-  </span>
-  <label>Contraseña:</label><br>
-  <input type="password" formControlName="contraUsuario" />
-  <span style="color: red" *ngIf="formularioLogin.controls['contraUsuario'].dirty && formularioLogin.controls['contraUsuario'].hasError('required')" >
-      <br>La contraseña no puede estar vacía
-  </span><br>
-  <button [disabled]="!formularioLogin.valid" type="button" (click)="test()">Enviar</button>
-</form>
+<div class="container-fluid p-0 mt-0">
+  <div class="row m-0">
+    <!-- Columna izquierda con fondo azul y texto -->
+    <div class="col-md-4 p-5 d-flex flex-column justify-content-center align-items-center"
+         style="background-color: #011640; color: white; height: 100vh; font-family: 'Inter', sans-serif;">
+      <h2 class="text-center" style="color: #ffffff; font-weight: 700;">¡Bienvenido de nuevo!</h2>
+      <p class="text-center" style="color: #426a8c; font-weight: 400;">Para seguir conectado con nosotros, por favor, inicia sesión con tu información personal.</p>
+    </div>
+
+    <!-- Columna derecha con el formulario -->
+    <div class="col-md-8 p-5" style="font-family: 'Inter', sans-serif;">
+      <form [formGroup]="formularioLogin">
+        <h2 class="text-center" style="color: #233a59; font-weight: 700;">Iniciar sesión</h2><br>
+
+        <div class="mb-3">
+          <input id="correoUsuario" type="email" class="form-control rounded-pill"
+                 formControlName="correoUsuario"
+                 placeholder="Email"
+                 style="background-color: #ffffff; border-color: #0d0d0d; color: #333333; font-weight: 400;" />
+          <div *ngIf="formularioLogin.controls['correoUsuario'].dirty" class="text-danger">
+            <span *ngIf="formularioLogin.controls['correoUsuario'].hasError('required')">El correo es un campo obligatorio</span>
+            <span *ngIf="formularioLogin.controls['correoUsuario'].hasError('pattern')">El correo debe ser válido</span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <input id="contraUsuario" type="password" class="form-control rounded-pill"
+                 formControlName="contraUsuario"
+                 placeholder="Contraseña"
+                 style="background-color: #ffffff; border-color: #0d0d0d; color: #333333; font-weight: 400;" />
+          <div *ngIf="formularioLogin.controls['contraUsuario'].dirty" class="text-danger">
+            <span *ngIf="formularioLogin.controls['contraUsuario'].hasError('required')">La contraseña no puede estar vacía</span>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button [disabled]="!formularioLogin.valid" type="button" class="btn btn-info rounded-pill"
+                  style="background-color: #426a8c; color: #f2f2f2; font-weight: 700;">
+            Iniciar sesión
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
