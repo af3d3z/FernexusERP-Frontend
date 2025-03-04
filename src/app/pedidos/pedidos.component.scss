@@ -1,26 +1,29 @@
-// Definir los colores en variables
-$azul-claro: #426A8C;
-$azul-oscuro: #011640;
-$azul-medio: #233A59;
-
-$table-header-color: $azul-oscuro;
-$table-row-color: $azul-claro;
-$table-row-hover-color: $azul-medio;
-
-/* Sobrescribir la clase .table */
-.table {
-  background-color: #ADD8E6; /* Color azul claro para todas las tablas */
-  border: 1px solid #4682B4; /* Bordes azul oscuro */
+/* Asegura que las columnas tengan el mismo tamaño pero no se interpongan */
+.row {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-/* Modificar el estilo de las filas */
-.table tbody tr {
-  background-color: #ADD8E6; /* Azul claro */
-  color: black; /* Color de texto negro */
+.col {
+  flex-grow: 1;
+  flex-basis: 0;
+  min-width: 80px; /* Evita que las columnas sean demasiado estrechas */
 }
 
-/* Modificar el encabezado */
-.table thead {
-  background-color: #4682B4; /* Azul oscuro */
-  color: white; /* Texto blanco */
+/* Bordes para las filas y celdas */
+.row > .col {
+  border: 1px solid #ddd;
+}
+
+.row > .col:first-child {
+  border-left: none;
+}
+
+.row > .col:last-child {
+  border-right: none;
+}
+
+/* Opcional: añade un pequeño margen para las filas */
+.row {
+  margin-bottom: 5px;
 }
