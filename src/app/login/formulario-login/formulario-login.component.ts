@@ -37,7 +37,7 @@ export class FormularioLoginComponent {
     );
   }
 
-  test(){
+  login(){
     const auth = getAuth();
     const email = this.formularioLogin.controls['correoUsuario'].value;
     const password = this.formularioLogin.controls['contraUsuario'].value;
