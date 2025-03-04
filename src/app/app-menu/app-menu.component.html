@@ -1,6 +1,14 @@
-<nav class="menu">
-  <button routerLink="/pedidos" routerLinkActive="active">Pedidos</button><br>
-  <button routerLink="/wip" routerLinkActive="active">Compras</button><br>
-  <button routerLink="/wip" routerLinkActive="active">Ventas</button><br>
-  <button routerLink="/wip" routerLinkActive="active">Inventario</button>
+<nav class="d-flex flex-column vh-100 p-3" style="width: 200px; background-color: #011640; font-family: 'Inter', sans-serif;">
+  <button class="btn text-white my-2" routerLink="/pedidos" routerLinkActive="active" style="background-color: transparent; border: none; text-align: left; width: 100%;">
+    <i class="bi bi-box"></i> Pedidos
+  </button>
+  <button class="btn text-white my-2" routerLink="/wip" routerLinkActive="active" style="background-color: transparent; border: none; text-align: left; width: 100%;">
+    <i class="bi bi-cart"></i> Compras
+  </button>
+  <button class="btn text-white my-2" routerLink="/wip" routerLinkActive="active" style="background-color: transparent; border: none; text-align: left; width: 100%;">
+    <i class="bi bi-cash"></i> Ventas
+  </button>
+  <button class="btn text-white my-2" routerLink="/wip" routerLinkActive="active" style="background-color: transparent; border: none; text-align: left; width: 100%;">
+    <i class="bi bi-building"></i> Inventario
+  </button>
 </nav>
