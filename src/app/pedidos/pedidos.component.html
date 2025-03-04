@@ -2,6 +2,49 @@
   <app-menu></app-menu>
   <div class="flex-grow-1 p-5 text-white" style="font-family: 'Inter', sans-serif; background-color: #233a59;">
     <h1 class="text-light">Pedidos</h1>
-    <p class="text-light">Estoy en ello rey</p>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover text-light">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Proveedor</th>
+          <th scope="col">Producto</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Precio Unitario</th>
+          <th scope="col">Fecha de Pedido</th>
+          <th scope="col">Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>1</td>
+          <td>Proveedor A</td>
+          <td>Producto X</td>
+          <td>100</td>
+          <td>$15.00</td>
+          <td>2025-03-01</td>
+          <td><span class="badge bg-info text-dark">Pendiente</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Proveedor B</td>
+          <td>Producto Y</td>
+          <td>50</td>
+          <td>$25.00</td>
+          <td>2025-03-02</td>
+          <td><span class="badge bg-success">Completado</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Proveedor C</td>
+          <td>Producto Z</td>
+          <td>200</td>
+          <td>$10.00</td>
+          <td>2025-03-03</td>
+          <td><span class="badge bg-danger">Cancelado</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
