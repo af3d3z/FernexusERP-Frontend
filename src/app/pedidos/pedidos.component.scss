@@ -1,29 +1,14 @@
-/* Asegura que las columnas tengan el mismo tamaño pero no se interpongan */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-}
+$primary: #233a59 !default;
+$dark: #1b2a41 !default;
+$table-bg: $dark !default;
+$table-color: #ffffff !default;
 
-.col {
-  flex-grow: 1;
-  flex-basis: 0;
-  min-width: 80px; /* Evita que las columnas sean demasiado estrechas */
-}
+$table-striped-bg: #2d3e5e !default;
 
-/* Bordes para las filas y celdas */
-.row > .col {
-  border: 1px solid #ddd;
-}
+$table-border-color: #50688c !default;
 
-.row > .col:first-child {
-  border-left: none;
-}
+$table-hover-bg: darken($primary, 10%) !default;
 
-.row > .col:last-child {
-  border-right: none;
-}
+$thead-bg: $primary !default;
 
-/* Opcional: añade un pequeño margen para las filas */
-.row {
-  margin-bottom: 5px;
-}
+@import "bootstrap/scss/bootstrap";

@@ -3,47 +3,48 @@
   <div class="flex-grow-1 p-5 text-white" style="font-family: 'Inter', sans-serif; background-color: #233a59;">
     <h1 class="text-light">Pedidos</h1>
     <div class="container-fluid p-0 mt-0">
-      <!-- Encabezado de la tabla con bordes -->
-      <div class="row p-2 bg-primary text-light border">
-        <div class="col-1 font-weight-bold border">#</div>
-        <div class="col-3 font-weight-bold border">Proveedor</div>
-        <div class="col-3 font-weight-bold border">Producto</div>
-        <div class="col-2 font-weight-bold border">Cantidad</div>
-        <div class="col-2 font-weight-bold border">Precio Unitario</div>
-        <div class="col-2 font-weight-bold border">Fecha de Pedido</div>
-        <div class="col-2 font-weight-bold border">Estado</div>
-      </div>
-
-      <!-- Fila de datos con bordes -->
-      <div class="row p-2 border">
-        <div class="col-1 border">1</div>
-        <div class="col-3 border">Proveedor A</div>
-        <div class="col-3 border">Producto X</div>
-        <div class="col-2 border">100</div>
-        <div class="col-2 border">15.00€</div>
-        <div class="col-2 border">2025-03-01</div>
-        <div class="col-2 border"><span class="badge bg-info text-dark">Pendiente</span></div>
-      </div>
-
-      <div class="row p-2 border">
-        <div class="col-1 border">2</div>
-        <div class="col-3 border">Proveedor B</div>
-        <div class="col-3 border">Producto Y</div>
-        <div class="col-2 border">50</div>
-        <div class="col-2 border">25.00€</div>
-        <div class="col-2 border">2025-03-02</div>
-        <div class="col-2 border"><span class="badge bg-success">Completado</span></div>
-      </div>
-
-      <div class="row p-2 border">
-        <div class="col-1 border">3</div>
-        <div class="col-3 border">Proveedor C</div>
-        <div class="col-3 border">Producto Z</div>
-        <div class="col-2 border">200</div>
-        <div class="col-2 border">10.00€</div>
-        <div class="col-2 border">2025-03-03</div>
-        <div class="col-2 border"><span class="badge bg-danger">Cancelado</span></div>
-      </div>
+      <table class="table table-dark table-bordered table-striped">
+        <thead class="table-dark text-light">
+        <tr>
+          <th>#</th>
+          <th>Proveedor</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio Unitario</th>
+          <th>Fecha de Pedido</th>
+          <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>1</td>
+          <td>Proveedor A</td>
+          <td>Producto X</td>
+          <td>100</td>
+          <td>15.00€</td>
+          <td>2025-03-01</td>
+          <td><span class="badge bg-info text-dark">Pendiente</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Proveedor B</td>
+          <td>Producto Y</td>
+          <td>50</td>
+          <td>25.00€</td>
+          <td>2025-03-02</td>
+          <td><span class="badge bg-success">Completado</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Proveedor C</td>
+          <td>Producto Z</td>
+          <td>200</td>
+          <td>10.00€</td>
+          <td>2025-03-03</td>
+          <td><span class="badge bg-danger">Cancelado</span></td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
