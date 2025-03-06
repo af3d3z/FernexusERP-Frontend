@@ -41,54 +41,39 @@
     <button class="btn btn-primary rounded-circle shadow-lg position-fixed"
             style="bottom: 20px; right: 20px; width: 60px; height: 60px; font-size: 24px;"
             [style.backgroundColor]="botonColor"
-            (click)="agregarPedido()">
+            (click)="abrirModal()">
+      +
     </button>
+  </div>
+</div>
 
-    <!-- MODAL DE FORMULARIO -->
-    <div class="modal fade show d-block" *ngIf="mostrarModal" style="background: rgba(0,0,0,0.5);">
-      <div class="modal-dialog">
-        <div class="modal-content" [style.backgroundColor]="modalBackgroundColor">
-          <div class="modal-header">
-            <h5 class="modal-title">Nuevo Pedido</h5>
-            <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+<!-- Modal para agregar pedido -->
+<div class="modal fade" id="modalAgregarPedido" tabindex="-1" aria-labelledby="modalAgregarPedidoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAgregarPedidoLabel">Agregar Pedido</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="pedidoForm" (ngSubmit)="guardarPedido()">
+          <div class="mb-3">
+            <label for="idPedido" class="form-label">Nº de Pedido</label>
+            <input type="text" class="form-control" id="idPedido" formControlName="idPedido" required>
           </div>
-          <div class="modal-body">
-            <form [formGroup]="pedidoForm">
-              <div class="mb-3">
-                <label class="form-label">Proveedor</label>
-                <input type="text" class="form-control" formControlName="proveedor">
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Producto</label>
-                <input type="text" class="form-control" formControlName="producto">
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Cantidad</label>
-                <input type="number" class="form-control" formControlName="cantidad">
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Precio Unitario (€)</label>
-                <input type="number" step="0.01" class="form-control" formControlName="precio">
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Fecha de Pedido</label>
-                <input type="date" class="form-control" formControlName="fechaPedido">
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Estado</label>
-                <select class="form-select" formControlName="estado">
-                  <option>Pendiente</option>
-                  <option>Completado</option>
-                  <option>Cancelado</option>
-                </select>
-              </div>
-            </form>
+          <div class="mb-3">
+            <label for="fechaPedido" class="form-label">Fecha de Pedido</label>
+            <input type="date" class="form-control" id="fechaPedido" formControlName="fechaPedido" required>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
-            <button type="button" class="btn btn-primary" (click)="guardarPedido()" [disabled]="!pedidoForm.valid">Guardar</button>
+          <div class="mb-3">
+            <label for="costeTotal" class="form-label">Coste Total</label>
+            <input type="number" class="form-control" id="costeTotal" formControlName="costeTotal" required>
           </div>
-        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!pedidoForm.valid">Guardar</button>
       </div>
     </div>
   </div>
