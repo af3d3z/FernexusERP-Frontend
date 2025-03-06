@@ -7,26 +7,30 @@
         <thead class="table-dark text-light">
         <tr>
           <th>#</th>
-          <th>Proveedor</th>
-          <th>Producto</th>
-          <th>Cantidad</th>
-          <th>Precio Unitario</th>
+          <th>Nº de pedido</th>
           <th>Fecha de Pedido</th>
-          <th>Estado</th>
+          <th>Nº de Pedidos</th>
+          <th>Coste total</th>
+          <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let pedido of pedidos; let i = index">
           <td>{{ i + 1 }}</td>
-          <td>{{ pedido.proveedor }}</td>
-          <td>{{ pedido.producto }}</td>
-          <td>{{ pedido.cantidad }}</td>
-          <td>{{ pedido.precio | currency:'EUR' }}</td>
+          <td>{{ pedido.idPedido }}</td>
           <td>{{ pedido.fechaPedido }}</td>
+          <td>{{ pedido.productos.length }}</td>
+          <td>{{ pedido.costeTotal | currency:'EUR' }}</td>
           <td>
-              <span [ngClass]="getEstadoClass(pedido.estado)">
-                {{ pedido.estado }}
-              </span>
+            <button class="btn btn-info btn-sm" (click)="consultarDetalles(pedido)">
+              Consultar
+            </button>
+            <button class="btn btn-warning btn-sm" (click)="editarPedido(pedido)">
+              Editar
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="borrarPedido(pedido)">
+              Borrar
+            </button>
           </td>
         </tr>
         </tbody>
@@ -38,7 +42,6 @@
             style="bottom: 20px; right: 20px; width: 60px; height: 60px; font-size: 24px;"
             [style.backgroundColor]="botonColor"
             (click)="agregarPedido()">
-      +
     </button>
 
     <!-- MODAL DE FORMULARIO -->
