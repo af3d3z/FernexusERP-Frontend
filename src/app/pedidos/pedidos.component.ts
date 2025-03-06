@@ -1,34 +1,52 @@
-import { Component } from '@angular/core';
-import {AppMenuComponent} from '../app-menu/app-menu.component';
-import {CurrencyPipe, NgClass, NgFor} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { AppMenuComponent } from '../app-menu/app-menu.component';
+import { CurrencyPipe, NgClass, NgFor } from '@angular/common';
+import { Pedido } from '../../interfaces/entidades';
+import { PedidosService } from '../../services/pedidos/pedidos.service';
+import {HttpClient, HttpClientModule} from '@angular/common/http';  // Importar el HttpClientModule
 
 @Component({
   selector: 'app-pedidos',
   standalone: true,
-  imports: [NgFor, AppMenuComponent, CurrencyPipe, NgClass],
+  imports: [NgFor, AppMenuComponent, CurrencyPipe, HttpClientModule],  // Asegurarse de incluir HttpClientModule aquí
   templateUrl: './pedidos.component.html',
-  styleUrl: './pedidos.component.scss'
+  styleUrls: ['./pedidos.component.scss']  // Corregir a styleUrls
 })
-export class PedidosComponent {
+export class PedidosComponent implements OnInit {
   botonColor: string = '#011640';
+  pedidos: Pedido[] = [];
 
-  pedidos = [
-    { proveedor: 'Proveedor A', producto: 'Producto X', cantidad: 100, precio: 15.00, fechaPedido: '2025-03-01', estado: 'Pendiente' },
-    { proveedor: 'Proveedor B', producto: 'Producto Y', cantidad: 50, precio: 25.00, fechaPedido: '2025-03-02', estado: 'Completado' },
-    { proveedor: 'Proveedor C', producto: 'Producto Z', cantidad: 200, precio: 10.00, fechaPedido: '2025-03-03', estado: 'Cancelado' }
-  ];
+  constructor(private pedidosService: PedidosService) {}
 
-  getEstadoClass(estado: string): string {
-    switch (estado) {
-      case 'Pendiente': return 'badge bg-info text-dark';
-      case 'Completado': return 'badge bg-success';
-      case 'Cancelado': return 'badge bg-danger';
-      default: return 'badge bg-secondary';
-    }
+  async getPedidos() {
+    this.pedidosService.get().subscribe({
+      next: (response) => {
+        this.pedidos = response;
+      },
+      error: (error) => {
+        alert("No se han podido rescatar los datos: " + error.toString());
+      }
+    });
   }
 
   agregarPedido() {
     console.log("Agregar nuevo pedido");
-    // TODO: modal para formulario o pagina nueva
+    // TODO: modal para formulario o página nueva
+  }
+
+  consultarDetalles(pedido: Pedido) {
+
+  }
+
+  editarPedido(pedido: Pedido) {
+
+  }
+
+  borrarPedido(pedido: Pedido) {
+
+  }
+
+  ngOnInit(): void {
+    this.getPedidos();
   }
 }
