@@ -21,23 +21,29 @@
           <td>{{ pedido.fechaPedido }}</td>
           <td>{{ pedido.productos.length }}</td>
           <td>{{ pedido.costeTotal | currency:'EUR' }}</td>
-          <td>
-            <button class="btn btn-info btn-sm" (click)="consultarDetalles(pedido)">
-              Consultar
+          <td class="container-sm d-flex justify-content-left">
+            <!-- Botón Consultar con icono y color -->
+            <button class="btn btn-sm me-1" (click)="consultarDetalles(pedido)" style="background-color: #426A8C; border: none;">
+              <i class="bi bi-eye" style="color: #F2F2F2;"></i>
             </button>
-            <button class="btn btn-warning btn-sm" (click)="editarPedido(pedido)">
-              Editar
+
+            <!-- Botón Editar con icono y color -->
+            <button class="btn btn-sm me-1" (click)="editarPedido(pedido)" style="background-color: #0D0D0D; border: none;">
+              <i class="bi bi-pencil" style="color: #F2F2F2;"></i>
             </button>
-            <button class="btn btn-danger btn-sm" (click)="borrarPedido(pedido)">
-              Borrar
+
+            <!-- Botón Borrar con icono y color -->
+            <button class="btn btn-sm me-1" (click)="borrarPedido(pedido)" style="background-color: #011640; border: none;">
+              <i class="bi bi-trash" style="color: #F2F2F2;"></i>
             </button>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
+
     <button class="btn btn-primary rounded-circle shadow-lg position-fixed"
-            style="bottom: 20px; right: 20px; width: 60px; height: 60px; font-size: 24px;"
+            style="bottom: 20px; right: 20px; width: 60px; height: 60px; font-size: 24px; background-color: #0D0D0D; border: none;"
             [style.backgroundColor]="botonColor"
             (click)="agregarPedido()">
     </button>

@@ -3,12 +3,11 @@ import { AppMenuComponent } from '../app-menu/app-menu.component';
 import { CurrencyPipe, NgClass, NgFor } from '@angular/common';
 import { Pedido } from '../../interfaces/entidades';
 import { PedidosService } from '../../services/pedidos/pedidos.service';
-import {HttpClient, HttpClientModule} from '@angular/common/http';  // Importar el HttpClientModule
 
 @Component({
   selector: 'app-pedidos',
   standalone: true,
-  imports: [NgFor, AppMenuComponent, CurrencyPipe, HttpClientModule],  // Asegurarse de incluir HttpClientModule aquí
+  imports: [NgFor, AppMenuComponent, CurrencyPipe],  // Asegurarse de incluir HttpClientModule aquí
   templateUrl: './pedidos.component.html',
   styleUrls: ['./pedidos.component.scss']  // Corregir a styleUrls
 })
@@ -35,18 +34,22 @@ export class PedidosComponent implements OnInit {
   }
 
   consultarDetalles(pedido: Pedido) {
-
+    // TODO: modal para mostrar los detalles
   }
 
   editarPedido(pedido: Pedido) {
-
+    // TODO: modal para editar el pedido seleccionado
   }
 
   borrarPedido(pedido: Pedido) {
-
+    // TODO: modal para borrar el pedido seleccionado
   }
 
   ngOnInit(): void {
     this.getPedidos();
+  }
+
+  cerrarModalBorrado() {
+
   }
 }
