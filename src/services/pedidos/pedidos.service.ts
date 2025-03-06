@@ -20,7 +20,7 @@ export class PedidosService {
 
   // devuelve los pedidos comprendidos entre dos fechas
   getPedidosFecha(fechaInicial: string, fechaFinal: string){
-    return this.http.get<Pedido[]>(Global.URL_API + "/Pedidos/?fechaIni=" + fechaInicial + "&fechaFinal=" + fechaFinal);
+    return this.http.get<Pedido[]>(Global.URL_API + "/Pedidos/?fechaInicio=" + fechaInicial + "&fechaFin=" + fechaFinal);
   }
 
   // devuelve los pedidos de un producto en concreto
