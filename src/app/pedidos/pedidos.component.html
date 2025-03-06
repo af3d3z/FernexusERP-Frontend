@@ -16,35 +16,27 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>1</td>
-          <td>Proveedor A</td>
-          <td>Producto X</td>
-          <td>100</td>
-          <td>15.00€</td>
-          <td>2025-03-01</td>
-          <td><span class="badge bg-info text-dark">Pendiente</span></td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Proveedor B</td>
-          <td>Producto Y</td>
-          <td>50</td>
-          <td>25.00€</td>
-          <td>2025-03-02</td>
-          <td><span class="badge bg-success">Completado</span></td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Proveedor C</td>
-          <td>Producto Z</td>
-          <td>200</td>
-          <td>10.00€</td>
-          <td>2025-03-03</td>
-          <td><span class="badge bg-danger">Cancelado</span></td>
+        <tr *ngFor="let pedido of pedidos; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ pedido.proveedor }}</td>
+          <td>{{ pedido.producto }}</td>
+          <td>{{ pedido.cantidad }}</td>
+          <td>{{ pedido.precio | currency:'EUR' }}</td>
+          <td>{{ pedido.fechaPedido }}</td>
+          <td>
+              <span [ngClass]="getEstadoClass(pedido.estado)">
+                {{ pedido.estado }}
+              </span>
+          </td>
         </tr>
         </tbody>
       </table>
     </div>
+    <button class="btn btn-primary rounded-circle shadow-lg position-fixed"
+            style="bottom: 20px; right: 20px; width: 60px; height: 60px; font-size: 24px;"
+            [style.backgroundColor]="botonColor"
+            (click)="agregarPedido()">
+      +
+    </button>
   </div>
 </div>
