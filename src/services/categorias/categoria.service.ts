@@ -14,6 +14,6 @@ export class CategoriaService {
   http = inject(HttpClient);
 
   get(): Observable<Categoria[]> {
-    return this.http.get<Categoria[]>(Global.URL_API + "/Categorias");
+    return this.http.get<Categoria[]>(Global.URL_API + "/Categoria");
   }
 }

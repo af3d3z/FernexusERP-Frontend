@@ -22,15 +22,20 @@ export interface Producto {
 
 export interface Pedido {
   idPedido: number;
-  productos: Producto[];
+  productos: ProductoCompleto[];
   costeTotal: number;
   fechaPedido: string;
+}
+
+export interface PedidoPost {
+  productos: ProductoCompleto[];
 }
 
 export interface ProductoCompleto {
   idProducto: number;
   proveedor: Proveedor;
   nombre: string;
+  categorias: Categoria[];
   precioUd: number;
   cantidad: number;
   precioTotal: number;
