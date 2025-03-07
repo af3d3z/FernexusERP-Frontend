@@ -3,24 +3,35 @@
   <div class="flex-grow-1 p-5 text-white" style="font-family: 'Inter', sans-serif; background-color: #233a59;">
     <h1 class="text-light">Pedidos</h1>
     <div class="container-fluid p-0 mt-0">
-      <table class="table table-dark table-bordered table-striped">
+      <!-- Spinner de carga -->
+      <div *ngIf="cargando" class="d-flex justify-content-center">
+        <div class="spinner-border text-light" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+
+      <!-- Tabla de pedidos -->
+      <table *ngIf="!cargando" class="table table-dark table-bordered table-striped">
         <thead class="table-dark text-light">
         <tr>
           <th>#</th>
           <th>Nº de pedido</th>
           <th>Fecha de Pedido</th>
-          <th>Nº de Pedidos</th>
+          <th>Nº de Productos</th>
           <th>Coste total</th>
           <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
+        <tr *ngIf="pedidos.length == 0">
+          <td colspan="6">Aún no hay pedidos</td>
+        </tr>
         <tr *ngFor="let pedido of pedidos; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ pedido.idPedido }}</td>
           <td>{{ pedido.fechaPedido }}</td>
           <td>{{ pedido.productos.length }}</td>
-          <td>{{ pedido.costeTotal | currency:'EUR' }}</td>
+          <td>{{ pedido.costeTotal }} €</td>
           <td class="container-sm d-flex justify-content-left">
             <!-- Botón Consultar con icono y color -->
             <button class="btn btn-sm me-1" (click)="consultarDetalles(pedido)" style="background-color: #426A8C; border: none;">
@@ -33,7 +44,7 @@
             </button>
 
             <!-- Botón Borrar con icono y color -->
-            <button class="btn btn-sm me-1" (click)="borrarPedido(pedido)" style="background-color: #011640; border: none;">
+            <button class="btn btn-sm me-1" (click)="abrirModalDelete(pedido)" style="background-color: #011640; border: none;">
               <i class="bi bi-trash" style="color: #F2F2F2;"></i>
             </button>
           </td>
@@ -47,5 +58,23 @@
             [style.backgroundColor]="botonColor"
             (click)="agregarPedido()">
     </button>
+  </div>
+</div>
+
+<div #borrarModal class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Borrar pedido</h5>
+        <button type="button" class="btn-close" (click)="cerrarModalDelete()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Seguro de que quieres borrar el pedido?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalDelete()">Cerrar</button>
+        <button type="button" class="btn btn-danger" (click)="borrarPedido(nPedidoSeleccionado)">Borrar</button>
+      </div>
+    </div>
   </div>
 </div>

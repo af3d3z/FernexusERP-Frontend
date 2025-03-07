@@ -34,8 +34,10 @@ export class PedidosService {
   }
 
   // borra el pedido y devuelve el número de filas afectadas
-  delete(idPedido: number): Observable<number> {
-    return this.http.get<number>(Global.URL_API + "/Pedido/" + idPedido);
+  delete(idPedido: number): Observable<string> {
+    return this.http.delete(Global.URL_API + "/Pedido/" + idPedido, {
+      responseType: "text" as const // Asegura que el tipo sea "text"
+    });
   }
 
   // actualiza el pedido y devuelve el número de filas afectadas

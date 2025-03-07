@@ -47,7 +47,7 @@ export class FormularioLoginComponent {
         console.log('Logged in successfully:', userCredential);
       })
       .catch((error) => {
-        console.error('Error logging in:', error.message);
+        swal("Error", "Credenciales incorrectas", "error")
       });
   }
 }
