@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Producto} from '../../interfaces/entidades';
+import {ProductoCompleto} from '../../interfaces/entidades';
 import {Global} from '../global';
 
 @Injectable({
@@ -13,16 +13,16 @@ export class ProductoService {
 
   http = inject(HttpClient);
 
-  get(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(Global.URL_API + "/Productos");
+  get(): Observable<ProductoCompleto[]> {
+    return this.http.get<ProductoCompleto[]>(Global.URL_API + "/Producto");
   }
 
-  getPorId(id: number): Observable<Producto> {
-    return this.http.get<Producto>(Global.URL_API + "/Productos/"+ id);
+  getPorId(id: number): Observable<ProductoCompleto> {
+    return this.http.get<ProductoCompleto>(Global.URL_API + "/Producto/"+ id);
   }
 
-  getPorCategoria(categoria: number): Observable<Producto[]> {
-    return this.http.get<Producto[]>(Global.URL_API + "/Productos/categorias/" + categoria);
+  getPorCategoria(categoria: number): Observable<ProductoCompleto[]> {
+    return this.http.get<ProductoCompleto[]>(Global.URL_API + "/Producto/categoria/" + categoria);
   }
 
 }

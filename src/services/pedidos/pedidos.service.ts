@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Pedido} from '../../interfaces/entidades';
 import {Observable} from 'rxjs';
@@ -29,8 +29,23 @@ export class PedidosService {
   }
 
   // devuelve el número de filas afectadas
-  post(pedido: Pedido): Observable<number> {
-    return this.http.post<number>(Global.URL_API + "/Pedido", pedido);
+  post(pedido: {
+    idProducto: number;
+    proveedor: {
+      idProveedor: number;
+      nombre: string;
+      correo: string;
+      telefono: string;
+      direccion: string;
+      pais: string
+    };
+    nombre: string;
+    precioUd: number;
+    cantidad: number;
+    precioTotal: number;
+    categorias: { idCategoria: number; nombre: string }[]
+  }[]): Observable<string> {
+    return this.http.post<string>(Global.URL_API + "/Pedido", pedido, { responseType: 'text' as 'json' });
   }
 
   // borra el pedido y devuelve el número de filas afectadas
