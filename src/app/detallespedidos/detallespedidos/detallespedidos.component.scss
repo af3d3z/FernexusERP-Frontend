@@ -1,0 +1,14 @@
+$primary: #233a59 !default;
+$dark: #011640 !default;
+$table-bg: $dark !default;
+$table-color: #f2f2f2 !default;
+
+$table-striped-bg: #5e6c85 !default;
+
+$table-border-color: #0a243b !default;
+
+$table-hover-bg: darken($primary, 10%) !default;
+
+$thead-bg: $primary !default;
+
+@import "bootstrap/scss/bootstrap";

@@ -1,0 +1,73 @@
+<div class="d-flex">
+  <div class="flex-grow-1 p-5 text-white" style="font-family: 'Inter', sans-serif; background-color: #233a59;">
+
+    <h1 class="mb-4" style="color: #ffffff;">Detalles del Pedido</h1>
+
+    <h3 class="h1">Productos del Pedido</h3>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre del Producto</th>
+          <th>Categorías</th>
+          <th>Cantidad</th>
+          <th>Precio por Unidad</th>
+          <th>Precio Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of pedido?.productos">
+          <td>{{ producto?.idProducto }}</td>
+          <td>{{ producto?.nombre }}</td>
+          <td>
+            <ul class="list-unstyled">
+              <li *ngFor="let categoria of producto?.categorias">
+                {{ categoria?.nombre }}
+              </li>
+            </ul>
+          </td>
+          <td>{{ producto?.cantidad }}</td>
+          <td>{{ producto?.precioUd | currency:'EUR' }}</td>
+          <td>{{ producto?.precioTotal | currency:'EUR' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Información de Proveedor</h3>
+    <div *ngFor="let producto of pedido?.productos" class="mb-4">
+      <div class="card provider-card">
+        <div class="card-body">
+          <h5 class="$table-border-color">
+            Proveedor: {{ producto?.proveedor?.nombre }}
+          </h5>
+          <div class="row">
+            <div class="col-md-6">
+              <ul class="list-unstyled">
+                <li><strong>Correo:</strong> {{ producto?.proveedor?.correo }}</li>
+                <li><strong>Teléfono:</strong> {{ producto?.proveedor?.telefono }}</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <ul class="list-unstyled">
+                <li><strong>Dirección:</strong> {{ producto?.proveedor?.direccion }}</li>
+                <li><strong>País:</strong> {{ producto?.proveedor?.pais }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-6 mb-3 mb-md-0">
+        <div class="p-3 rounded-3" style="background-color: #2d3e5e;">
+          <h5 >Fecha del Pedido</h5>
+          <p>{{ pedido.fechaPedido | date:'mediumDate'}}</p>
+          <h5>Total del Pedido</h5>
+          <p >{{ pedido.costeTotal | currency:'EUR' }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
