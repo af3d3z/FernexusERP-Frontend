@@ -28,6 +28,7 @@ export class PedidosComponent implements OnInit {
   pedidoEditando: Pedido | null = null;
   productosEditados: ProductoCompleto[] = [];
   productos: ProductoCompleto[] = [];
+  productosOriginales: ProductoCompleto[] = [];
   pedidoForm: FormGroup;
   productoSeleccionadoId: number | null = null;
   productosSeleccionados: ProductoCompleto[] = [];
@@ -256,6 +257,16 @@ export class PedidosComponent implements OnInit {
     this.pedidoEditando = {...pedido};
     this.productosEditados = pedido.productos.map(prod => ({ ...prod }));
 
+    this.productosOriginales = pedido.productos.map(prod => ({
+      idProducto: prod.idProducto,
+      proveedor: prod.proveedor,
+      nombre: prod.nombre,
+      categorias: prod.categorias,
+      precioUd: prod.precioUd,
+      cantidad: prod.cantidad,
+      precioTotal: prod.precioTotal
+    }));
+
     const modalElement = document.getElementById('modalEditarPedido');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
@@ -283,6 +294,14 @@ export class PedidosComponent implements OnInit {
     const producto = this.productos.find(p => p.idProducto === Number(productoId));
     if (!producto) {
       swal("Error 404", "Producto no encontrado.", "error");
+      return;
+    }
+
+    const proveedorIdOriginal = this.productosOriginales[0]?.proveedor.idProveedor;
+    const proveedorIdNuevo = producto.proveedor.idProveedor;
+
+    if (proveedorIdOriginal !== proveedorIdNuevo) {
+      swal("Error", "Todos los productos deben ser del mismo proveedor.", "error");
       return;
     }
 
@@ -342,6 +361,14 @@ export class PedidosComponent implements OnInit {
     if (this.productosEditados.length === 0) {
       swal("Error", "Debe agregar al menos un producto.", "error");
       return;
+    }
+
+    const proveedorId = this.productosEditados[0].proveedor.idProveedor;
+    for (let producto of this.productosEditados) {
+      if (producto.proveedor.idProveedor !== proveedorId) {
+        swal("Error", "Todos los productos deben ser del mismo proveedor.", "error");
+        return;
+      }
     }
 
     this.pedidoEditando.productos = this.productosEditados;
