@@ -217,8 +217,13 @@ export class PedidosComponent implements OnInit {
     const productoId = this.pedidoForm.get('productoSeleccionadoId')?.value;
     const cantidad = this.pedidoForm.get('cantidadProducto')?.value;
 
-    if (!productoId || cantidad <= 0) {
-      swal("Error", "Seleccione un producto y una cantidad válida.", "error");
+    if (!productoId) {
+      swal("Error", "Seleccione un producto antes de agregarlo.", "error");
+      return;
+    }
+
+    if (!cantidad || cantidad <= 0) {
+      swal("Error", "La cantidad debe ser mayor que 0.", "error");
       return;
     }
 
@@ -226,6 +231,17 @@ export class PedidosComponent implements OnInit {
     if (!producto) {
       swal("Error 404", "Producto no encontrado.", "error");
       return;
+    }
+
+    if (this.productosEditados.length > 0) {
+      const idProveedor = this.productosEditados[0].proveedor.idProveedor;
+      if (producto.proveedor.idProveedor !== idProveedor) {
+        swal("Error", "Todos los productos deben ser del mismo proveedor.", "error");
+
+        // Desmarcar el producto en el formulario
+        this.pedidoForm.get('productoSeleccionadoId')?.setValue(null);
+        return; // No agregar el producto
+      }
     }
 
     const productoExistente = this.productosEditados.find(p => p.idProducto === productoId);
@@ -257,8 +273,6 @@ export class PedidosComponent implements OnInit {
 
     this.pedidosService.update(this.pedidoEditando.idPedido, this.pedidoEditando).subscribe({
       next: (response) => {
-        console.log('Respuesta del backend:', response);
-
         if (response === "Se ha actualizado el pedido correctamente") {
           swal("Éxito", "Pedido actualizado correctamente", "success");
           this.getPedidos();
@@ -269,11 +283,9 @@ export class PedidosComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error al actualizar el pedido:', err);
         swal("Error", "Hubo un problema al actualizar el pedido", "error");
       }
     });
-
 
     const modalElement = document.getElementById('modalEditarPedido');
     if (modalElement) {
