@@ -198,11 +198,27 @@ export class PedidosComponent implements OnInit {
       }
     }
 
-    const precioTotal = producto.precioUd * cantidad;
+    const indexProducto = this.productosSeleccionados.findIndex(p => Number(p.idProducto) === Number(productoId));
 
-    const productoPost = { ...producto, cantidad, precioTotal};
+    if (indexProducto !== -1) {
+      const productosActualizados = [...this.productosSeleccionados];
 
-    this.productosSeleccionados.push(productoPost);
+      productosActualizados[indexProducto] = {
+        ...productosActualizados[indexProducto],
+        cantidad: productosActualizados[indexProducto].cantidad + cantidad,
+        precioTotal: productosActualizados[indexProducto].precioUd *
+          (productosActualizados[indexProducto].cantidad + cantidad)
+      };
+
+      this.productosSeleccionados = productosActualizados;
+
+    } else {
+      const precioTotal = producto.precioUd * cantidad;
+      this.productosSeleccionados = [
+        ...this.productosSeleccionados,
+        { ...producto, cantidad, precioTotal }
+      ];
+    }
 
     this.pedidoForm.get('productoSeleccionadoId')?.setValue(null); // Resetear el dropdown
     this.pedidoForm.get('cantidadProducto')?.setValue(1);
@@ -281,14 +297,29 @@ export class PedidosComponent implements OnInit {
       }
     }
 
-    const productoExistente = this.productosEditados.find(p => p.idProducto === productoId);
-    if (productoExistente) {
-      productoExistente.cantidad += cantidad;
-      productoExistente.precioTotal = productoExistente.precioUd * productoExistente.cantidad;
+    const indexProducto = this.productosEditados.findIndex(p => Number(p.idProducto) === Number(productoId));
+
+    if (indexProducto !== -1) {
+      const productosActualizados = [...this.productosEditados];
+
+      productosActualizados[indexProducto] = {
+        ...productosActualizados[indexProducto],
+        cantidad: productosActualizados[indexProducto].cantidad + cantidad,
+        precioTotal: productosActualizados[indexProducto].precioUd *
+          (productosActualizados[indexProducto].cantidad + cantidad)
+      };
+
+      this.productosEditados = productosActualizados;
+
     } else {
       const precioTotal = producto.precioUd * cantidad;
-      this.productosEditados.push({ ...producto, cantidad, precioTotal });
+      this.productosEditados = [
+        ...this.productosEditados,
+        { ...producto, cantidad, precioTotal }
+      ];
     }
+
+    this.productosEditados = [...this.productosEditados];
 
     this.pedidoForm.get('productoSeleccionadoId')?.setValue(null); // Reset dropdown
     this.pedidoForm.get('cantidadProducto')?.setValue(1);
