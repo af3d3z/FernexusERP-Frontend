@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PedidosService } from '../../../services/pedidos/pedidos.service';
 import { Pedido } from '../../../interfaces/entidades';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {AppMenuComponent} from '../../app-menu/app-menu.component';
 
@@ -18,6 +18,7 @@ export class DetallespedidosComponent implements OnInit, OnDestroy {
   routeSub: Subscription = {} as Subscription; // type Subscription for cleanup
 
   constructor(
+    protected router: Router,
     private route: ActivatedRoute,
     private pedidosService: PedidosService
   ) {}
@@ -36,6 +37,7 @@ export class DetallespedidosComponent implements OnInit, OnDestroy {
   obtenerPedido(id: number): void {
     this.pedidosService.getPedidoPorId(id).subscribe({
       next: (pedido: Pedido) => {
+        console.log(pedido);
         this.pedido = pedido;
       },
       error: (error) => {

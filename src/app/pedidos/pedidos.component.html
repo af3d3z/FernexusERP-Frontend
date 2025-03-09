@@ -1,58 +1,66 @@
 <div class="d-flex">
   <app-menu></app-menu>
   <div class="flex-grow-1 p-5 text-white" style="font-family: 'Inter', sans-serif; background-color: #233a59;">
-    <h1 class="text-light">Pedidos</h1>
+    <h1 class="text-light mb-4 fw-bold">Pedidos</h1>
     <div class="container-fluid p-0 mt-0">
       <!-- Spinner de carga -->
-      <div *ngIf="cargando" class="d-flex justify-content-center">
+      <div *ngIf="cargando" class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
         <div class="spinner-border text-light" role="status">
           <span class="visually-hidden">Cargando...</span>
         </div>
       </div>
 
       <!-- Tabla de pedidos -->
-      <table *ngIf="!cargando" class="table table-dark table-bordered table-striped">
-        <thead class="table-dark text-light">
-        <tr>
-          <th>#</th>
-          <th>Código de Pedido</th>
-          <th>Fecha de Pedido</th>
-          <th>Nº de Productos</th>
-          <th>Coste total</th>
-          <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngIf="pedidos.length == 0">
-          <td colspan="6">Aún no hay pedidos</td>
-        </tr>
-        <tr *ngFor="let pedido of pedidos; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ pedido.idPedido }}</td>
-          <td>{{ pedido.fechaPedido.substring(0, 10) }}</td>
-          <td>{{ pedido.productos.length }}</td>
-          <td>{{ pedido.costeTotal }} €</td>
-          <td class="container-sm d-flex justify-content-left">
-            <!-- Botón Consultar con icono y color -->
-            <button class="btn btn-sm me-1" (click)="consultarDetalles(pedido)" style="background-color: #426A8C; border: none;">
-              <i class="bi bi-eye" style="color: #F2F2F2;"></i>
-            </button>
+      <div *ngIf="!cargando" class="table-responsive rounded-3 shadow-sm" style="max-height: 570px; overflow-y: auto;">
+        <table class="table table-borderless table-hover mb-0" style="background-color: #1a2a3a;">
+          <thead>
+          <tr class="text-light" style="background-color: #0D0D0D; position: sticky; top: 0; z-index: 1;">
+            <th class="p-3">#</th>
+            <th class="p-3">Código de Pedido</th>
+            <th class="p-3">Fecha de Pedido</th>
+            <th class="p-3">Nº de Productos</th>
+            <th class="p-3">Coste total</th>
+            <th class="p-3">Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngIf="pedidos.length == 0">
+            <td colspan="6" class="text-center py-4 text-light">Aún no hay pedidos</td>
+          </tr>
+          <tr *ngFor="let pedido of pedidos; let i = index" class="text-light" style="border-bottom: 1px solid #426A8C;">
+            <td class="p-3">{{ i + 1 }}</td>
+            <td class="p-3">{{ pedido.idPedido }}</td>
+            <td class="p-3">{{ pedido.fechaPedido.substring(0, 10) }}</td>
+            <td class="p-3">{{ pedido.productos.length }}</td>
+            <td class="p-3">{{ pedido.costeTotal }} €</td>
+            <td class="p-3 d-flex gap-2">
+              <!-- Botón Consultar con icono -->
+              <button class="btn btn-sm d-flex align-items-center justify-content-center"
+                      (click)="consultarDetalles(pedido)"
+                      style="background-color: #426A8C; border: none; width: 32px; height: 32px;">
+                <i class="bi bi-eye text-light"></i>
+              </button>
 
-            <!-- Botón Editar con icono y color -->
-            <button class="btn btn-sm me-1" (click)="editarPedido(pedido)" style="background-color: #0D0D0D; border: none;">
-              <i class="bi bi-pencil" style="color: #F2F2F2;"></i>
-            </button>
-
-            <!-- Botón Borrar con icono y color -->
-            <button class="btn btn-sm me-1" (click)="abrirModalDelete(pedido)" style="background-color: #011640; border: none;">
-              <i class="bi bi-trash" style="color: #F2F2F2;"></i>
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+              <!-- Botón Editar con icono -->
+              <button class="btn btn-sm d-flex align-items-center justify-content-center"
+                      (click)="editarPedido(pedido)"
+                      style="background-color: #0D0D0D; border: none; width: 32px; height: 32px;">
+                <i class="bi bi-pencil text-light"></i>
+              </button>
+              <button class="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
+                      (click)="abrirModalDelete(pedido)"
+                      style="border: none; width: 32px; height: 32px;">
+                <i class="bi bi-trash text-light"></i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <button class="btn btn-primary rounded-circle shadow-lg position-fixed"
+
+    <!-- Botón flotante para agregar pedido -->
+    <button class="btn btn-primary rounded-circle shadow-lg position-fixed d-flex align-items-center justify-content-center"
             style="bottom: 20px; right: 20px; width: 60px; height: 60px; font-size: 24px; background-color: #0D0D0D; border: none;"
             [style.backgroundColor]="botonColor"
             (click)="abrirModal()">
@@ -61,12 +69,13 @@
   </div>
 </div>
 
+<!-- Modal para borrar pedido -->
 <div #borrarModal class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-dark text-light">
         <h5 class="modal-title" id="exampleModalLabel">Borrar pedido</h5>
-        <button type="button" class="btn-close" (click)="cerrarModalDelete()" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" (click)="cerrarModalDelete()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         ¿Seguro de que quieres borrar el pedido?
@@ -78,12 +87,14 @@
     </div>
   </div>
 </div>
+
+<!-- Modal para agregar pedido -->
 <div class="modal fade" id="modalAgregarPedido" tabindex="-1" aria-labelledby="modalAgregarPedidoLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-dark text-light">
         <h5 class="modal-title" id="modalAgregarPedidoLabel">Agregar Pedido</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="pedidoForm" (ngSubmit)="guardarPedido()">
@@ -92,7 +103,7 @@
             <div class="d-flex gap-2">
               <select class="form-control" id="producto" formControlName="productoSeleccionadoId">
                 <option *ngFor="let producto of productos" [value]="producto.idProducto">
-                  {{ producto.nombre }} - {{ producto.precioUd | currency:'EUR' }}
+                  {{producto.proveedor.nombre}} {{ producto.nombre }} - {{ producto.precioUd | currency:'EUR' }}
                 </option>
               </select>
               <input type="number" class="form-control" placeholder="Cantidad" formControlName="cantidadProducto" min="1" />

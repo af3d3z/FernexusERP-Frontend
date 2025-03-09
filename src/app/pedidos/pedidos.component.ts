@@ -9,12 +9,13 @@ import {FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule} fr
 import {HttpClientModule} from '@angular/common/http';
 import {ProductoService} from '../../services/producto/producto.service';
 import {Router} from '@angular/router';
+import {DataTablesModule} from 'angular-datatables';
 
 declare var bootstrap: any;
 @Component({
   selector: 'app-pedidos',
   standalone: true,
-  imports: [NgFor, NgIf, AppMenuComponent, CurrencyPipe, HttpClientModule, ReactiveFormsModule, FormsModule, CommonModule],
+  imports: [NgFor, NgIf, AppMenuComponent, CurrencyPipe, HttpClientModule, ReactiveFormsModule, FormsModule, CommonModule, DataTablesModule],
   templateUrl: './pedidos.component.html',
   styleUrls: ['./pedidos.component.scss']
 })
