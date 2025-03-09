@@ -60,8 +60,8 @@ export class PedidosService {
   }
 
   // actualiza el pedido y devuelve el número de filas afectadas
-  update(idPedido: number, pedido: Pedido): Observable<number> {
-    return this.http.put<number>(Global.URL_API + "/Pedido/" + idPedido, pedido);
+  update(idPedido: number, pedido: Pedido): Observable<string> {
+    return this.http.put<string>(Global.URL_API + "/Pedido/" + idPedido, pedido, { responseType: 'text' as 'json' });
   }
 
 }

@@ -124,3 +124,48 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="modalEditarPedido" tabindex="-1" aria-labelledby="modalEditarPedidoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditarPedidoLabel">Editar Pedido</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="pedidoForm" (ngSubmit)="actualizarPedido()">
+          <div class="mb-3">
+            <label for="producto" class="form-label">Seleccionar Producto</label>
+            <div class="d-flex gap-2">
+              <select class="form-control" id="productoEditar" formControlName="productoSeleccionadoId">
+                <option *ngFor="let producto of productos" [value]="producto.idProducto">
+                  {{ producto.nombre }} - {{ producto.precioUd | currency:'EUR' }}
+                </option>
+              </select>
+              <input type="number" class="form-control" placeholder="Cantidad" formControlName="cantidadProducto" min="1" />
+              <button type="button" class="btn btn-success" (click)="agregarProductoEditado()">+</button>
+            </div>
+          </div>
+
+          <!-- Lista de productos añadidos al pedido -->
+          <div *ngIf="productosEditados.length > 0">
+            <h6 class="mt-3">Productos en el Pedido:</h6>
+            <ul class="list-group">
+              <li *ngFor="let producto of productosEditados" class="list-group-item d-flex justify-content-between align-items-center">
+                {{ producto.nombre }} - {{ producto.precioUd | currency:'EUR' }} (Cantidad: {{ producto.cantidad }})
+                <button type="button" class="btn btn-danger btn-sm" (click)="eliminarProductoEditado(producto.idProducto)">X</button>
+              </li>
+            </ul>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" [disabled]="productosEditados.length === 0" (click)="actualizarPedido()">
+          Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
