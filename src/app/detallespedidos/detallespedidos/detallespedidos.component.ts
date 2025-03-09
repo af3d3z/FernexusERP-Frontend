@@ -1,35 +1,52 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PedidosService } from '../../../services/pedidos/pedidos.service';
 import { Pedido } from '../../../interfaces/entidades';
+import { ActivatedRoute } from '@angular/router';
+import {Subscription} from 'rxjs';
+import {AppMenuComponent} from '../../app-menu/app-menu.component';
 
 @Component({
   selector: 'app-pedidos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AppMenuComponent],
   templateUrl: './detallespedidos.component.html',
   styleUrls: ['./detallespedidos.component.scss'],
 })
-export class DetallespedidosComponent implements OnInit {
+export class DetallespedidosComponent implements OnInit, OnDestroy {
   pedido: Pedido = {} as Pedido; // objeto vacio
-//  { path: ' { path: 'detalles/:id', component: DetallespedidosComponent, canActivate: [authGuardGuard]}, hace falta crear la navegacion a la pagina debe pasar el id por parametro en app routes
-  constructor( private pedidosService: PedidosService) {}
+  routeSub: Subscription = {} as Subscription; // type Subscription for cleanup
+
+  constructor(
+    private route: ActivatedRoute,
+    private pedidosService: PedidosService
+  ) {}
 
   ngOnInit(): void {
-    this.obtenerPedido(4); // 4 es un id de ejemplo tiene que recibir un id por parametro
+    this.routeSub = this.route.params.subscribe((params) => {
+      const id = +params['id']; // Convert to number (if it's a string)
+      if (!isNaN(id)) {
+        this.obtenerPedido(id);
+      } else {
+        console.error('Invalid id in route parameters.');
+      }
+    });
   }
 
   obtenerPedido(id: number): void {
-    this.pedidosService.getPedidoPorId(id).subscribe({ //llanada a la api
+    this.pedidosService.getPedidoPorId(id).subscribe({
       next: (pedido: Pedido) => {
         this.pedido = pedido;
       },
       error: (error) => {
-        console.error('Error al obtener el pedido:', error); // salta cundo hay un error en la api si no sale o no existe el id o tarda mucho en responder
-      }
+        console.error('Error al obtener el pedido:', error);
+      },
     });
   }
-  /**hace falta esto en services no teneis ningun metodo para pedir un producto solo en la api si existe  getPedidoPorId(idProducto: number): Observable<Pedido> {
-      return this.http.get<Pedido>(`https://fernexus-api.azurewebsites.net/api/Pedido/${4}`);
-    } */
+
+  ngOnDestroy(): void {
+    if (this.routeSub) {
+      this.routeSub.unsubscribe(); // Proper cleanup of subscription
+    }
+  }
 }

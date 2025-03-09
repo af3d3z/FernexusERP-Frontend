@@ -8,6 +8,7 @@ import { CurrencyPipe, NgFor, CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {ProductoService} from '../../services/producto/producto.service';
+import {Router} from '@angular/router';
 
 declare var bootstrap: any;
 @Component({
@@ -35,7 +36,8 @@ export class PedidosComponent implements OnInit {
     private pedidosService: PedidosService,
     private productoService: ProductoService,
     private fb: FormBuilder,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router: Router
   ) {
     this.pedidoForm = this.fb.group({
       productos: [[], Validators.required],
@@ -197,7 +199,7 @@ export class PedidosComponent implements OnInit {
   }
 
   consultarDetalles(pedido: Pedido) {
-    // TODO: modal para mostrar los detalles
+    this.router.navigate(['detalles/', pedido.idPedido]);
   }
 
   editarPedido(pedido: Pedido) {

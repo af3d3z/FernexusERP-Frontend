@@ -8,6 +8,7 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
     RouterLink,
     RouterLinkActive,
   ],
+  standalone: true,
   styleUrl: './app-menu.component.scss'
 })
 export class AppMenuComponent {

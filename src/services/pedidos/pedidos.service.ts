@@ -18,6 +18,10 @@ export class PedidosService {
     return this.http.get<Pedido[]>(Global.URL_API + "/Pedido", {headers: new HttpHeaders({timeout: `${30000}`})});
   }
 
+  getPedidoPorId(idProducto: number): Observable<Pedido> {
+    return this.http.get<Pedido>(`https://fernexus-api.azurewebsites.net/api/Pedido/${idProducto}`);
+  }
+
   // devuelve los pedidos comprendidos entre dos fechas
   getPedidosFecha(fechaInicial: string, fechaFinal: string){
     return this.http.get<Pedido[]>(Global.URL_API + "/Pedido/?fechaInicio=" + fechaInicial + "&fechaFin=" + fechaFinal);
