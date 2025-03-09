@@ -13,26 +13,42 @@ export class PedidosService {
 
   constructor(private http: HttpClient) { }
 
-  // devuelve todos los pedidos
+  /**
+   * Devuelve todos los pedidos
+   */
   get(): Observable<Pedido[]> {
     return this.http.get<Pedido[]>(Global.URL_API + "/Pedido", {headers: new HttpHeaders({timeout: `${30000}`})});
   }
 
+  /**
+   * Devuelve un pedido en base a su id
+   * @param idProducto
+   */
   getPedidoPorId(idProducto: number): Observable<Pedido> {
     return this.http.get<Pedido>(`https://fernexus-api.azurewebsites.net/api/Pedido/${idProducto}`);
   }
 
-  // devuelve los pedidos comprendidos entre dos fechas
+  /**
+   * Devuelve los pedidos comprendidos entre dos fechas
+   * @param fechaInicial
+   * @param fechaFinal
+   */
   getPedidosFecha(fechaInicial: string, fechaFinal: string){
     return this.http.get<Pedido[]>(Global.URL_API + "/Pedido/?fechaInicio=" + fechaInicial + "&fechaFin=" + fechaFinal);
   }
 
-  // devuelve los pedidos de un producto en concreto
+  /**
+   * Devuelve los pedidos que contienen un producto en concreto
+   * @param idProducto
+   */
   getPedidosProducto(idProducto: number): Observable<Pedido[]>{
     return this.http.get<Pedido[]>(Global.URL_API + "/Pedido/" + idProducto);
   }
 
-  // devuelve el número de filas afectadas
+  /**
+   * Agrega un pedido y devuelve el número de filas afectadas
+   * @param pedido
+   */
   post(pedido: {
     idProducto: number;
     proveedor: {
@@ -52,14 +68,21 @@ export class PedidosService {
     return this.http.post<string>(Global.URL_API + "/Pedido", pedido, { responseType: 'text' as 'json' });
   }
 
-  // borra el pedido y devuelve el número de filas afectadas
+  /**
+   * Borra un pedido por su id
+   * @param idPedido
+   */
   delete(idPedido: number): Observable<string> {
     return this.http.delete(Global.URL_API + "/Pedido/" + idPedido, {
       responseType: "text" as const // Asegura que el tipo sea "text"
     });
   }
 
-  // actualiza el pedido y devuelve el número de filas afectadas
+  /**
+   * Actualiza un pedido en concreto
+   * @param idPedido
+   * @param pedido
+   */
   update(idPedido: number, pedido: Pedido): Observable<string> {
     return this.http.put<string>(Global.URL_API + "/Pedido/" + idPedido, pedido, { responseType: 'text' as 'json' });
   }

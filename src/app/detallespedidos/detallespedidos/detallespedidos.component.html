@@ -19,7 +19,6 @@
           </tr>
           </thead>
           <tbody>
-          <!-- Loop through products -->
           <tr *ngFor="let producto of pedido.productos ?? []; let i = index" class="align-middle">
             <td>{{ i + 1 }}</td>
             <td>{{ producto?.nombre }}</td>
@@ -38,8 +37,6 @@
         </table>
       </div>
     </div>
-
-    <!-- Supplier Information -->
     <div>
       <h3 class="h4 fw-bold mb-4">Información de Proveedor</h3>
       <div class="mb-4">
@@ -66,8 +63,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Order Summary -->
     <div *ngIf="pedido" class="row mb-4">
       <div class="col-md-6">
         <div class="p-4 rounded-3 shadow-sm" style="background-color: #2d3e5e;">
@@ -78,8 +73,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Back Button -->
     <button class="btn btn-primary btn-lg" (click)="router.navigate(['pedidos/'])">
       <i class="bi bi-arrow-left me-2"></i> Volver
     </button>

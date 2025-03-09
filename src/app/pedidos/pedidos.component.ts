@@ -47,6 +47,9 @@ export class PedidosComponent implements OnInit {
     });
   }
 
+  /**
+   * Usa el service de pedidos para consultar la lista y controla que se muestre o no el spinner
+   */
   async getPedidos() {
     this.cargando = true;
     this.pedidosService.get().subscribe({
@@ -61,6 +64,9 @@ export class PedidosComponent implements OnInit {
     });
   }
 
+  /**
+   * Usa el service de productos para consultar la lista de productos
+   */
   async getProductos() {
     this.productoService.get().subscribe({
       next: (response) => {
@@ -72,6 +78,10 @@ export class PedidosComponent implements OnInit {
     });
   }
 
+  /**
+   * Se encarga de agregar un pedido a la BD
+   * @param p
+   */
   async postPedidos(p: {
     idProducto: number;
     proveedor: {
@@ -101,6 +111,9 @@ export class PedidosComponent implements OnInit {
     })
   }
 
+  /**
+   * Abre el modal AgregarPedido
+   */
   abrirModal() {
     const modalElement = document.getElementById('modalAgregarPedido');
 
@@ -112,6 +125,9 @@ export class PedidosComponent implements OnInit {
     }
   }
 
+  /**
+   * Función que ejecuta el modal AgregarPedido al pulsar en el botón de guardado
+   */
   guardarPedido() {
     if (this.productosSeleccionados.length === 0) {
       alert("Debe agregar al menos un producto.");
@@ -151,6 +167,9 @@ export class PedidosComponent implements OnInit {
     this.productosSeleccionados = []; // Limpiar la lista para el siguiente pedido
   }
 
+  /**
+   * Agrega un producto a un pedido en creación
+   */
   agregarProducto() {
     const productoId = this.pedidoForm.get('productoSeleccionadoId')?.value;
     const cantidad = this.pedidoForm.get('cantidadProducto')?.value;
@@ -189,19 +208,34 @@ export class PedidosComponent implements OnInit {
     this.pedidoForm.get('cantidadProducto')?.setValue(1);
   }
 
+  /**
+   * Elimina un producto de un pedido en creación
+   * @param idProducto
+   */
   eliminarProducto(idProducto: number) {
     this.productosSeleccionados = this.productosSeleccionados.filter(p => p.idProducto !== idProducto);
   }
 
+  /**
+   * Llama en el inicio a estas dos funciones para tener la tabla de pedidos y el selector de productos guardados en memoria
+   */
   ngOnInit(): void {
     this.getPedidos();
     this.getProductos();
   }
 
+  /**
+   * Lleva a la página de consultar detalles de un pedido en concreto
+   * @param pedido
+   */
   consultarDetalles(pedido: Pedido) {
     this.router.navigate(['detalles/', pedido.idPedido]);
   }
 
+  /**
+   * Abre el modal EditarPedido
+   * @param pedido
+   */
   editarPedido(pedido: Pedido) {
     this.pedidoEditando = {...pedido};
     this.productosEditados = pedido.productos.map(prod => ({ ...prod }));
@@ -213,6 +247,9 @@ export class PedidosComponent implements OnInit {
     }
   }
 
+  /**
+   * Agrega un producto a un pedido que está siendo editado
+   */
   agregarProductoEditado() {
     const productoId = this.pedidoForm.get('productoSeleccionadoId')?.value;
     const cantidad = this.pedidoForm.get('cantidadProducto')?.value;
@@ -257,10 +294,17 @@ export class PedidosComponent implements OnInit {
     this.pedidoForm.get('cantidadProducto')?.setValue(1);
   }
 
+  /**
+   * Elimina un producto de un pedido que está siendo editado
+   * @param idProducto
+   */
   eliminarProductoEditado(idProducto: number) {
     this.productosEditados = this.productosEditados.filter(p => p.idProducto !== idProducto);
   }
 
+  /**
+   * Actualiza un pedido mediante el service de pedidos
+   */
   actualizarPedido() {
     if (!this.pedidoEditando) return;
 
@@ -294,6 +338,10 @@ export class PedidosComponent implements OnInit {
     }
   }
 
+  /**
+   * Borra un pedido mediante el service de pedidos
+   * @param nPedido
+   */
   borrarPedido(nPedido: number) {
     if (nPedido > 0) {
       this.pedidosService.delete(nPedido).subscribe({
@@ -312,12 +360,19 @@ export class PedidosComponent implements OnInit {
     this.cerrarModalDelete();
   }
 
+  /**
+   * Abre el modal de borrado
+   * @param pedido
+   */
   abrirModalDelete(pedido: Pedido) {
     this.nPedidoSeleccionado = pedido.idPedido;
     this.renderer.addClass(this.modal.nativeElement, 'show');
     this.renderer.setStyle(this.modal.nativeElement, 'display', 'block');
   }
 
+  /**
+   * Cierra el modal de borrado
+   */
   cerrarModalDelete() {
     this.nPedidoSeleccionado = 0;
     this.renderer.removeClass(this.modal.nativeElement, 'show');

@@ -13,13 +13,18 @@ export class ProveedorService {
 
   http = inject(HttpClient);
 
-    // devuelve el listado de proveedores
-    get(): Observable<Proveedor[]>{
+  /**
+   * Devuelve un listado de proveedores
+   */
+  get(): Observable<Proveedor[]>{
       return this.http.get<Proveedor[]>(Global.URL_API + "/Proveedor");
     }
 
-    // devuelve el proveedor con ese id
-    getPorId(id: number): Observable<Proveedor>{
+  /**
+   * Devuelve un proveedor por id
+   * @param id
+   */
+  getPorId(id: number): Observable<Proveedor>{
       return this.http.get<Proveedor>(Global.URL_API + "/Proveedor/" + id);
     }
 }

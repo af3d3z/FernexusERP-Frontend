@@ -9,8 +9,6 @@
           <span class="visually-hidden">Cargando...</span>
         </div>
       </div>
-
-      <!-- Tabla de pedidos -->
       <div *ngIf="!cargando" class="table-responsive rounded-3 shadow-sm" style="max-height: 570px; overflow-y: auto;">
         <table class="table table-borderless table-hover mb-0" style="background-color: #1a2a3a;">
           <thead>
@@ -34,14 +32,11 @@
             <td class="p-3">{{ pedido.productos.length }}</td>
             <td class="p-3">{{ pedido.costeTotal }} €</td>
             <td class="p-3 d-flex gap-2">
-              <!-- Botón Consultar con icono -->
               <button class="btn btn-sm d-flex align-items-center justify-content-center"
                       (click)="consultarDetalles(pedido)"
                       style="background-color: #426A8C; border: none; width: 32px; height: 32px;">
                 <i class="bi bi-eye text-light"></i>
               </button>
-
-              <!-- Botón Editar con icono -->
               <button class="btn btn-sm d-flex align-items-center justify-content-center"
                       (click)="editarPedido(pedido)"
                       style="background-color: #0D0D0D; border: none; width: 32px; height: 32px;">
@@ -58,8 +53,6 @@
         </table>
       </div>
     </div>
-
-    <!-- Botón flotante para agregar pedido -->
     <button class="btn btn-primary rounded-circle shadow-lg position-fixed d-flex align-items-center justify-content-center"
             style="bottom: 20px; right: 20px; width: 60px; height: 60px; font-size: 24px; background-color: #0D0D0D; border: none;"
             [style.backgroundColor]="botonColor"
@@ -135,7 +128,7 @@
     </div>
   </div>
 </div>
-
+<!-- Modal para editar pedidos -->
 <div class="modal fade" id="modalEditarPedido" tabindex="-1" aria-labelledby="modalEditarPedidoLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

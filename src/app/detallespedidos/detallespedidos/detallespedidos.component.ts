@@ -34,6 +34,10 @@ export class DetallespedidosComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Recoge el pedido en base al id que hemos recogido de la url
+   * @param id id del pedido a consultar
+   */
   obtenerPedido(id: number): void {
     this.pedidosService.getPedidoPorId(id).subscribe({
       next: (pedido: Pedido) => {
