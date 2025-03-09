@@ -25,8 +25,8 @@ export class PedidosComponent implements OnInit {
   pedidos: Pedido[] = [];
   nPedidoSeleccionado = 0;
   cargando: boolean = true; // Variable para controlar el estado de carga
-
-
+  pedidoEditando: Pedido | null = null;
+  productosEditados: ProductoCompleto[] = [];
   productos: ProductoCompleto[] = [];
   pedidoForm: FormGroup;
   productoSeleccionadoId: number | null = null;
@@ -46,7 +46,6 @@ export class PedidosComponent implements OnInit {
       cantidadProducto: [1, [Validators.required, Validators.min(1)]]
     });
   }
-
 
   async getPedidos() {
     this.cargando = true;
@@ -204,7 +203,83 @@ export class PedidosComponent implements OnInit {
   }
 
   editarPedido(pedido: Pedido) {
-    // TODO: modal para editar el pedido seleccionado
+    this.pedidoEditando = {...pedido};
+    this.productosEditados = pedido.productos.map(prod => ({ ...prod }));
+
+    const modalElement = document.getElementById('modalEditarPedido');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  agregarProductoEditado() {
+    const productoId = this.pedidoForm.get('productoSeleccionadoId')?.value;
+    const cantidad = this.pedidoForm.get('cantidadProducto')?.value;
+
+    if (!productoId || cantidad <= 0) {
+      swal("Error", "Seleccione un producto y una cantidad válida.", "error");
+      return;
+    }
+
+    const producto = this.productos.find(p => p.idProducto === Number(productoId));
+    if (!producto) {
+      swal("Error 404", "Producto no encontrado.", "error");
+      return;
+    }
+
+    const productoExistente = this.productosEditados.find(p => p.idProducto === productoId);
+    if (productoExistente) {
+      productoExistente.cantidad += cantidad;
+      productoExistente.precioTotal = productoExistente.precioUd * productoExistente.cantidad;
+    } else {
+      const precioTotal = producto.precioUd * cantidad;
+      this.productosEditados.push({ ...producto, cantidad, precioTotal });
+    }
+
+    this.pedidoForm.get('productoSeleccionadoId')?.setValue(null); // Reset dropdown
+    this.pedidoForm.get('cantidadProducto')?.setValue(1);
+  }
+
+  eliminarProductoEditado(idProducto: number) {
+    this.productosEditados = this.productosEditados.filter(p => p.idProducto !== idProducto);
+  }
+
+  actualizarPedido() {
+    if (!this.pedidoEditando) return;
+
+    if (this.productosEditados.length === 0) {
+      swal("Error", "Debe agregar al menos un producto.", "error");
+      return;
+    }
+
+    this.pedidoEditando.productos = this.productosEditados;
+
+    this.pedidosService.update(this.pedidoEditando.idPedido, this.pedidoEditando).subscribe({
+      next: (response) => {
+        console.log('Respuesta del backend:', response);
+
+        if (response === "Se ha actualizado el pedido correctamente") {
+          swal("Éxito", "Pedido actualizado correctamente", "success");
+          this.getPedidos();
+        } else if (response === "No se ha podido actualizar el pedido" || response === "No existe ningún pedido con ese ID") {
+          swal("Error", response, "error");
+        } else {
+          swal("Error", "Hubo un problema al actualizar el pedido", "error");
+        }
+      },
+      error: (err) => {
+        console.error('Error al actualizar el pedido:', err);
+        swal("Error", "Hubo un problema al actualizar el pedido", "error");
+      }
+    });
+
+
+    const modalElement = document.getElementById('modalEditarPedido');
+    if (modalElement) {
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      modal.hide();
+    }
   }
 
   borrarPedido(nPedido: number) {
